@@ -1,0 +1,194 @@
+{
+	"openapi": "3.0.0",
+	"info": {
+		"title": "Todo API",
+		"description": "API for managing todo items",
+		"version": "1.0.0"
+	},
+	"servers": [
+		{
+			"url": "http://localhost:3000",
+			"description": "Local development server"
+		}
+	],
+	"paths": {
+		"/todos": {
+			"get": {
+				"summary": "Get all todos",
+				"description": "Retrieve a list of all todo items",
+				"responses": {
+					"200": {
+						"description": "A list of todos",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/Todo"
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"post": {
+				"summary": "Create a new todo",
+				"description": "Add a new todo item to the list",
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/NewTodo"
+							}
+						}
+					}
+				},
+				"responses": {
+					"201": {
+						"description": "Todo created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Todo"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/todos/{todoId}": {
+			"get": {
+				"summary": "Get a todo by ID",
+				"description": "Retrieve a single todo item by its ID",
+				"parameters": [
+					{
+						"name": "todoId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						},
+						"description": "Unique identifier of the todo item"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A single todo",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Todo"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Todo not found"
+					}
+				}
+			},
+			"put": {
+				"summary": "Update a todo",
+				"description": "Update an existing todo item",
+				"parameters": [
+					{
+						"name": "todoId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						},
+						"description": "Unique identifier of the todo item"
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Todo"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Todo updated",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Todo"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Todo not found"
+					}
+				}
+			},
+			"delete": {
+				"summary": "Delete a todo",
+				"description": "Remove an existing todo item",
+				"parameters": [
+					{
+						"name": "todoId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						},
+						"description": "Unique identifier of the todo item"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Todo deleted"
+					},
+					"404": {
+						"description": "Todo not found"
+					}
+				}
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"Todo": {
+				"type": "object",
+				"properties": {
+					"_id": {
+						"type": "string",
+						"description": "Unique identifier for the todo item"
+					},
+					"title": {
+						"type": "string",
+						"description": "Title of the todo item"
+					},
+					"completed": {
+						"type": "boolean",
+						"description": "Completion status of the todo item"
+					}
+				},
+				"required": ["title", "completed"]
+			},
+			"NewTodo": {
+				"type": "object",
+				"properties": {
+					"title": {
+						"type": "string",
+						"description": "Title of the new todo item"
+					},
+					"completed": {
+						"type": "boolean",
+						"description": "Completion status of the new todo item"
+					}
+				},
+				"required": ["title"]
+			}
+		}
+	}
+}
