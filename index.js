@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 
 const app = express();
 app.use(express.json());
-app.use(express.static("public")); // route to static files
+app.use(express.static("src")); // route to static files
 
 mongoose // Connection to MongoDB Atlas
 	.connect(process.env.MONGODB_URI)

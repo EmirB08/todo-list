@@ -12,7 +12,8 @@ document
 
 const addTodo = async (title) => {
 	try {
-		await fetch("http://localhost:3000/todos", { // POST
+		await fetch("http://localhost:3000/todos", {
+			// POST
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({ title, completed: false }),
@@ -23,7 +24,8 @@ const addTodo = async (title) => {
 	}
 };
 
-const fetchTodos = async () => { // GET
+const fetchTodos = async () => {
+	// GET
 	try {
 		const response = await fetch("http://localhost:3000/todos");
 		const todos = await response.json();
@@ -43,13 +45,20 @@ const displayTodos = (todos) => {
 
 		const deleteButton = document.createElement("button");
 		deleteButton.textContent = "Delete";
+		deleteButton.classList.add(
+			"px-4",
+			"py-2",
+			"text-sm",
+			"text-white",
+			"bg-red-500",
+			"hover:bg-red-600",
+			"rounded"
+		);
 		deleteButton.addEventListener("click", () => deleteTodo(todo._id));
 		li.appendChild(deleteButton);
 
 		const updateButton = document.createElement("button");
-		updateButton.textContent = todo.completed
-			? "Incomplete"
-			: "Complete";
+		updateButton.textContent = todo.completed ? "Incomplete" : "Complete";
 		updateButton.addEventListener("click", () =>
 			updateTodo(todo._id, !todo.completed)
 		);
@@ -59,7 +68,8 @@ const displayTodos = (todos) => {
 	});
 };
 
-const deleteTodo = async (id) => { // DELETE
+const deleteTodo = async (id) => {
+	// DELETE
 	try {
 		await fetch(`http://localhost:3000/todos/${id}`, { method: "DELETE" });
 		await fetchTodos();
@@ -68,7 +78,8 @@ const deleteTodo = async (id) => { // DELETE
 	}
 };
 
-const updateTodo = async (id, completed) => { // PUT
+const updateTodo = async (id, completed) => {
+	// PUT
 	try {
 		await fetch(`http://localhost:3000/todos/${id}`, {
 			method: "PUT",
