@@ -41,30 +41,63 @@ const displayTodos = (todos) => {
 
 	todos.forEach((todo) => {
 		const li = document.createElement("li");
-		li.textContent = todo.title;
-
-		const deleteButton = document.createElement("button");
-		deleteButton.textContent = "Delete";
-		deleteButton.classList.add(
-			"px-4",
-			"py-2",
-			"text-sm",
-			"text-white",
-			"bg-red-500",
-			"hover:bg-red-600",
-			"rounded"
+		li.classList.add(
+			"flex",
+			"justify-between",
+			"items-center",
+			"p-2",
+			"bg-white",
+			"rounded",
+			"mb-2"
 		);
-		deleteButton.addEventListener("click", () => deleteTodo(todo._id));
-		li.appendChild(deleteButton);
+
+		const textSpan = document.createElement("span");
+		textSpan.textContent = todo.title;
+		li.appendChild(textSpan);
+
+		const buttonsContainer = document.createElement("div");
 
 		const updateButton = document.createElement("button");
-		updateButton.textContent = todo.completed ? "Incomplete" : "Complete";
+		updateButton.textContent = todo.completed ? "Done" : "In Progress"; // Switched the text
+		updateButton.classList.add("px-2", "py-1", "text-sm", "rounded");
+		if (!todo.completed) {
+			updateButton.classList.add(
+				"bg-yellow-500",
+				"hover:bg-yellow-600",
+				"text-white"
+			);
+		} else {
+			updateButton.classList.add(
+				"bg-green-700",
+				"hover:bg-green-800",
+				"text-white"
+			);
+		}
+
 		updateButton.addEventListener("click", () =>
 			updateTodo(todo._id, !todo.completed)
 		);
-		li.appendChild(updateButton);
+		buttonsContainer.appendChild(updateButton);
+
+		li.appendChild(buttonsContainer);
 
 		todoList.appendChild(li);
+
+		const deleteButton = document.createElement("button");
+		deleteButton.textContent = "DEL";
+		deleteButton.classList.add(
+			"px-2",
+			"py-1",
+			"ml-2",
+			"text-sm",
+			"text-white",
+			"bg-red-700",
+			"hover:bg-red-800",
+			"rounded",
+			"mr-2"
+		);
+		deleteButton.addEventListener("click", () => deleteTodo(todo._id));
+		buttonsContainer.appendChild(deleteButton);
 	});
 };
 
